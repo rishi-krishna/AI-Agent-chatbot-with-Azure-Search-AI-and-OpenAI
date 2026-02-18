@@ -1,0 +1,49 @@
+<div class="chat-panel">
+  <header class="chat-header">
+    <h2>COO Help</h2>
+    <p class="subtitle">Ask FAQs or get guided to the right screen</p>
+  </header>
+
+  <div class="messages" *ngIf="hasMessages(); else welcome">
+    <div
+      *ngFor="let msg of messages(); trackBy: trackByIndex"
+      class="message"
+      [class.user]="msg.role === 'user'"
+      [class.assistant]="msg.role === 'assistant'"
+    >
+      <div class="bubble">
+        <span class="role">{{ msg.role === 'user' ? 'You' : 'Assistant' }}</span>
+        <div *ngIf="msg.loading" class="loading">Thinking…</div>
+        <div *ngIf="!msg.loading" class="content">{{ msg.content }}</div>
+        <div *ngIf="msg.citations?.length && !msg.loading" class="citations">
+          <span class="citations-label">Sources:</span>
+          <div *ngFor="let c of msg.citations" class="citation">
+            <strong>{{ c.source_title }}</strong> ({{ c.source_file }})
+            <p class="snippet">{{ c.content_snippet }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #welcome>
+    <div class="welcome">
+      <p>Ask anything about the COO app: approvals, reports, dashboard, or navigation.</p>
+      <p class="hint">Example: "How do I approve requests?" or "Where do I run reports?"</p>
+    </div>
+  </ng-template>
+
+  <div class="input-row">
+    <input
+      type="text"
+      class="input"
+      [value]="input()"
+      (input)="input.set($any($event.target).value)"
+      (keydown.enter)="send()"
+      placeholder="Type your question…"
+      [disabled]="loading()"
+    />
+    <button type="button" class="send-btn" (click)="send()" [disabled]="loading() || !input().trim()">
+      Send
+    </button>
+  </div>
+</div>
