@@ -1,19 +1,22 @@
-<div class="chat-panel">
+<button class="chat-launcher" type="button" (click)="toggleWidget()" [attr.aria-expanded]="isOpen()">
+  <span class="launcher-icon">?</span>
+  <span>COO Assistant</span>
+</button>
+
+<section class="chat-panel" *ngIf="isOpen()">
   <header class="chat-header">
-    <h2>COO Help</h2>
-    <p class="subtitle">Ask FAQs or get guided to the right screen</p>
+    <div>
+      <h2>COO Assistant</h2>
+      <p class="subtitle">Navigation and process support</p>
+    </div>
+    <button class="close-btn" type="button" (click)="closeWidget()" aria-label="Close chat">x</button>
   </header>
 
   <div class="messages" *ngIf="hasMessages(); else welcome">
-    <div
-      *ngFor="let msg of messages(); trackBy: trackByIndex"
-      class="message"
-      [class.user]="msg.role === 'user'"
-      [class.assistant]="msg.role === 'assistant'"
-    >
+    <div *ngFor="let msg of messages(); trackBy: trackByIndex" class="message" [class.user]="msg.role === 'user'">
       <div class="bubble">
         <span class="role">{{ msg.role === 'user' ? 'You' : 'Assistant' }}</span>
-        <div *ngIf="msg.loading" class="loading">Thinking…</div>
+        <div *ngIf="msg.loading" class="loading">Thinking...</div>
         <div *ngIf="!msg.loading" class="content">{{ msg.content }}</div>
         <div *ngIf="msg.citations?.length && !msg.loading" class="citations">
           <span class="citations-label">Sources:</span>
@@ -25,10 +28,11 @@
       </div>
     </div>
   </div>
+
   <ng-template #welcome>
     <div class="welcome">
-      <p>Ask anything about the COO app: approvals, reports, dashboard, or navigation.</p>
-      <p class="hint">Example: "How do I approve requests?" or "Where do I run reports?"</p>
+      <p>Ask about approvals, reports, dashboard, and navigation.</p>
+      <p class="hint">Example: "How do I approve requests?"</p>
     </div>
   </ng-template>
 
@@ -39,11 +43,11 @@
       [value]="input()"
       (input)="input.set($any($event.target).value)"
       (keydown.enter)="send()"
-      placeholder="Type your question…"
+      placeholder="Type your question..."
       [disabled]="loading()"
     />
     <button type="button" class="send-btn" (click)="send()" [disabled]="loading() || !input().trim()">
       Send
     </button>
   </div>
-</div>
+</section>

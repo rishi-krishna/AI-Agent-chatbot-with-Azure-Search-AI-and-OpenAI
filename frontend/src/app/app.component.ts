@@ -5,7 +5,7 @@ import { ChatComponent } from './chat/chat.component';
   selector: 'app-root',
   standalone: true,
   imports: [ChatComponent],
-  template: '<app-chat />',
-  styles: [':host { display: block; min-height: 100vh; }'],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {}

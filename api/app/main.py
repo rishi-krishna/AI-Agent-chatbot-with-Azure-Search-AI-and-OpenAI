@@ -2,11 +2,6 @@
 AI Gateway API: retrieval + LLM completion with citations.
 """
 import logging
-from pathlib import Path
-from dotenv import load_dotenv
-
-# Load .env from project root so one file works for indexing and API
-load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")
 
 from fastapi import FastAPI, Depends, HTTPException
 
@@ -26,9 +21,14 @@ app = FastAPI(
     version="1.0.0",
 )
 
+CORS_ORIGINS = [
+    "http://localhost:4200",
+    "https://YOUR-FRONTEND-NAME.azurestaticapps.net",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

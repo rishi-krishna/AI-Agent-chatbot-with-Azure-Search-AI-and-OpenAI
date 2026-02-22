@@ -2,7 +2,7 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CoochatService } from './coochat.service';
-import type { ChatMessage, Citation } from './models';
+import type { ChatMessage } from './models';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +16,16 @@ export class ChatComponent {
   input = signal('');
   messages = signal<ChatMessage[]>([]);
   loading = signal(false);
+  isOpen = signal(false);
   hasMessages = computed(() => this.messages().length > 0);
+
+  toggleWidget(): void {
+    this.isOpen.update((open) => !open);
+  }
+
+  closeWidget(): void {
+    this.isOpen.set(false);
+  }
 
   send(): void {
     const text = this.input().trim();
