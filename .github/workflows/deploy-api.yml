@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "Coochat_curser/api/**"
+      - "api/**"
       - ".github/workflows/deploy-api.yml"
   workflow_dispatch:
 
@@ -19,4 +19,4 @@ jobs:
         with:
           app-name: YOUR-API-APP
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_API }}
-          package: Coochat_curser/api
+          package: api
