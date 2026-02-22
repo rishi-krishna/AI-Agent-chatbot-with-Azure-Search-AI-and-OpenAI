@@ -23,12 +23,13 @@ app = FastAPI(
 
 CORS_ORIGINS = [
     "http://localhost:4200",
-    "https://YOUR-FRONTEND-NAME.azurestaticapps.net",
+    "https://raraa-dfheajgthfangmgf.canadacentral-01.azurewebsites.net",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
+    allow_origin_regex=r"https://.*\.azurewebsites\.net",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
