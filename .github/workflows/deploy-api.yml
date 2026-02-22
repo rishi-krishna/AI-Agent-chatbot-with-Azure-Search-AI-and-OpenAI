@@ -2,21 +2,24 @@ name: Deploy API to Azure App Service
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "api/**"
       - ".github/workflows/deploy-api.yml"
   workflow_dispatch:
 
 jobs:
-  deploy:
+  deploy-api:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Deploy API
         uses: azure/webapps-deploy@v3
         with:
-          app-name: raraa
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_API }}
+          app-name: YOUR_API_APP_NAME
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_UI }}
           package: api
