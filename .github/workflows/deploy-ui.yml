@@ -1,0 +1,32 @@
+name: Deploy UI to Azure App Service
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Coochat_curser/frontend/**"
+      - ".github/workflows/deploy-ui.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build Angular
+        working-directory: Coochat_curser/frontend
+        run: |
+          npm ci
+          npm run build -- --configuration production
+
+      - name: Deploy UI
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: YOUR-UI-APP
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_UI }}
+          package: Coochat_curser/frontend/dist/coo-chat-ui/browser
