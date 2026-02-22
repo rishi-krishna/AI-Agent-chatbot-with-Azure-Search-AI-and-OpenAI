@@ -7,7 +7,16 @@ import type { ChatResponse } from './models';
 @Injectable({ providedIn: 'root' })
 export class CoochatService {
   private http = inject(HttpClient);
-  private baseUrl = environment.apiBaseUrl;
+  private baseUrl = this.normalizeBaseUrl(environment.apiBaseUrl);
+
+  private normalizeBaseUrl(value: string): string {
+    const trimmed = (value || '').trim();
+    if (!trimmed) {
+      return '';
+    }
+    const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+    return withProtocol.replace(/\/+$/, '');
+  }
 
   sendMessage(message: string): Observable<ChatResponse> {
     return this.http.post<ChatResponse>(`${this.baseUrl}/chat`, { message }).pipe(
