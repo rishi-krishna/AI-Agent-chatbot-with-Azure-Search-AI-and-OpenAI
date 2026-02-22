@@ -17,6 +17,6 @@ jobs:
       - name: Deploy API
         uses: azure/webapps-deploy@v3
         with:
-          app-name: YOUR-API-APP
+          app-name: raraa
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_API }}
           package: api
