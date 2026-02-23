@@ -34,6 +34,6 @@ jobs:
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
         with:
-          app-name: YOUR_DOTNET_API_APP_NAME
+          app-name: backend-netnet
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_API_DOTNET }}
           package: ./api-dotnet-publish
