@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://YOUR_DOTNET_API_APP_NAME.azurewebsites.net',
+  apiBaseUrl: 'https://backend-netnet-akbkd0dhg9avggga.canadacentral-01.azurewebsites.net',
 };
